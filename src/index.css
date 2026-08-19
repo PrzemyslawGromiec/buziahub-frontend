@@ -2,6 +2,7 @@
 
 body {
   margin: 0;
+  background: #cfcccc; /* Replace 'zinc-400' with a valid color value */
 }
 
 #root {

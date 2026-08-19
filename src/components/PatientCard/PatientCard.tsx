@@ -1,6 +1,6 @@
 import Button from "../Button/Button";
 import "./PatientCard.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Patient } from "../../types/Patient";
 
 type PatientCardProps = {
@@ -14,6 +14,9 @@ function PatientCard({ patient, onEdit, onArchive, showDetails }: PatientCardPro
   const [newFirstName, setNewFirstName] = useState(patient.firstName);
   const trimmedFirstName = newFirstName.trim();
   const isSaveDisabled = !trimmedFirstName || trimmedFirstName === patient.firstName;
+  useEffect(() => {
+    setNewFirstName(patient.firstName);
+  }, [patient.id, patient.firstName]);
 
   function handleEditClick() {
     if (isSaveDisabled) {

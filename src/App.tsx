@@ -152,6 +152,7 @@ function App() {
                 <AppointmentCard
                   key={appointment.id}
                   appointment={appointment}
+                  patientName={selectedPatient.firstName + " " + selectedPatient.lastName}
                   onComplete={handleCompleteAppointment}
                   onCancel={handleCancelAppointment}
                   showActions

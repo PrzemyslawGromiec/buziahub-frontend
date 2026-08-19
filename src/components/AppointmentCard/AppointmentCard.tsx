@@ -3,6 +3,7 @@ import Button from "../Button/Button";
 
 type AppointmentCardProps = {
   appointment: Appointment;
+  patientName: string;
   onComplete: (id: number) => void;
   onCancel: (id: number) => void;
   showActions?: boolean;
@@ -10,6 +11,7 @@ type AppointmentCardProps = {
 
 export default function AppointmentCard({
   appointment,
+  patientName,
   onComplete,
   onCancel,
   showActions = false,
@@ -35,7 +37,7 @@ export default function AppointmentCard({
 
   return (
     <article className="appointment-card">
-      <h3>{appointment.patientName}</h3>
+      <h3>{patientName}</h3>
 
       <p>Date: {formattedDate}</p>
 
@@ -47,13 +49,9 @@ export default function AppointmentCard({
 
       {showActions && appointment.status === "SCHEDULED" && (
         <div className="appointment-card__actions">
-          <Button onClick={() => onComplete(appointment.id)}>
-            Complete
-          </Button>
+          <Button onClick={() => onComplete(appointment.id)}>Complete</Button>
 
-          <Button onClick={() => onCancel(appointment.id)}>
-            Cancel
-          </Button>
+          <Button onClick={() => onCancel(appointment.id)}>Cancel</Button>
         </div>
       )}
     </article>
