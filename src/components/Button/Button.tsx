@@ -3,7 +3,7 @@ import "./Button.css";
 
 type ButtonProps = {
     children: React.ReactNode;
-    onClick: () => void;
+    onClick?: () => void;
     disabled?: boolean;
     type?: "button" | "submit" | "reset";
 };

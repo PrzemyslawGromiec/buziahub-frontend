@@ -1,3 +1,4 @@
+import type { SubmitEvent } from "react";
 import Button from "../Button/Button";
 import "./PatientDetailsForm.css";
 
@@ -12,9 +13,16 @@ export default function PatientDetailsForm({
   onDetailsChange,
   onSubmit,
 }: PatientDetailsFormProps) {
+  function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    onSubmit();
+  }
+
   return (
-    <div className="update-details">
-      <label htmlFor="patient-details">Update patient details:</label>
+    <form className="update-details" onSubmit={handleSubmit}>
+      <label htmlFor="patient-details">
+        Update patient details:
+      </label>
 
       <textarea
         id="patient-details"
@@ -23,9 +31,9 @@ export default function PatientDetailsForm({
         onChange={(event) => onDetailsChange(event.target.value)}
       />
 
-      <Button onClick={onSubmit} disabled={!details.trim()}>
+      <Button type="submit" disabled={!details.trim()}>
         Update details
       </Button>
-    </div>
+    </form>
   );
 }

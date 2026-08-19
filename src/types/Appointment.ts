@@ -1,7 +1,10 @@
 export type Appointment = {
-    id: number,
-    patientName: string,
-    date: string,
-    time: string,
-    status: "SCHEDULED" | "COMPLETED" | "CANCELLED";
-}
+  id: number;
+  patientId: number;
+  patientName: string;
+  startTime: string;
+  endTime: string;
+  status: AppointmentStatus;
+};
+
+export type AppointmentStatus = "SCHEDULED" | "COMPLETED" | "CANCELLED";

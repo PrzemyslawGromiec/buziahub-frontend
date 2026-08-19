@@ -1,8 +1,11 @@
+export type Gender = "MALE" | "FEMALE" | "OTHER";
+
 export type Patient = {
-    id: number;
+  id: number;
   firstName: string;
   lastName: string;
   age: number;
+  gender: Gender;
   active: boolean;
   details?: string;
 };

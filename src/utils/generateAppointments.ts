@@ -1,70 +1,71 @@
 import type { Appointment } from "../types/Appointment";
+import type { Patient } from "../types/Patient";
 
-const firstNames = [
-  "John",
-  "Anna",
-  "Michael",
-  "Sarah",
-  "David",
-  "Emma",
+const appointmentHours = [
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
 ];
 
-const lastNames = [
-   "Smith",
-  "Brown",
-  "Wilson",
-  "Taylor",
-  "Jones",
-  "Williams",
+const statuses: Appointment["status"][] = [
+  "SCHEDULED",
+  "CANCELLED",
+  "COMPLETED",
 ];
-
-const times = [
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-]
-
-const status: Appointment["status"][] = [
-    "SCHEDULED",
-    "CANCELLED",
-    "COMPLETED"
-]
 
 export function generateAppointments(
-    count: number,
+  count: number,
+  patients: Patient[],
 ): Appointment[] {
+  if (patients.length === 0) {
+    return [];
+  }
 
-    const appointments: Appointment[] = [];
-    for (let i = 0; i < count; i++) {
-        const firstnameIndex = Math.floor(Math.random() * firstNames.length);
-        const lastNameIndex = Math.floor(Math.random() * lastNames.length);
-        const patientName = `${firstNames[firstnameIndex]} ${lastNames[lastNameIndex]}`;
-        const randomDays = Math.floor(Math.random() * 30);
-        const date = new Date();
-        date.setDate(date.getDate() + randomDays);
-        const appointmentDate = date.toISOString().split("T")[0];
+  const appointments: Appointment[] = [];
 
-        const randomTime = Math.floor(Math.random() * times.length);
-        const appointmentTime = times[randomTime];
+  for (let index = 0; index < count; index++) {
+    const patientIndex = Math.floor(
+      Math.random() * patients.length,
+    );
 
-        const randomStatus = status[Math.floor(Math.random() * status.length)];
-    
-        const appointment: Appointment = {
-            id: i + 1,
-            patientName,
-            date: appointmentDate,
-            time: appointmentTime,
-            status: randomStatus
-        };
+    const patient = patients[patientIndex];
 
-        appointments.push(appointment)
+    const randomDays = Math.floor(Math.random() * 30);
+    const randomHourIndex = Math.floor(
+      Math.random() * appointmentHours.length,
+    );
 
-    }
+    const appointmentHour =
+      appointmentHours[randomHourIndex];
 
-    return appointments;
+    const startTime = new Date();
+
+    startTime.setDate(startTime.getDate() + randomDays);
+    startTime.setHours(appointmentHour, 0, 0, 0);
+
+    const endTime = new Date(startTime);
+    endTime.setHours(endTime.getHours() + 1);
+
+    const randomStatusIndex = Math.floor(
+      Math.random() * statuses.length,
+    );
+
+    const appointment: Appointment = {
+      id: index + 1,
+      patientId: patient.id,
+      patientName: `${patient.firstName} ${patient.lastName}`,
+      startTime: startTime.toISOString(),
+      endTime: endTime.toISOString(),
+      status: statuses[randomStatusIndex],
+    };
+
+    appointments.push(appointment);
+  }
+
+  return appointments;
 }

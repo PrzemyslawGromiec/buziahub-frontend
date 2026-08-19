@@ -1,14 +1,7 @@
 import Button from "../Button/Button";
 import "./PatientCard.css";
 import { useState } from "react";
-
-type Patient = {
-  firstName: string;
-  lastName: string;
-  age: number;
-  active: boolean;
-  details?: string;
-};
+import type { Patient } from "../../types/Patient";
 
 type PatientCardProps = {
   patient: Patient;
@@ -17,18 +10,17 @@ type PatientCardProps = {
   showDetails?: boolean;
 };
 
-
-
 function PatientCard({ patient, onEdit, onArchive, showDetails }: PatientCardProps) {
   const [newFirstName, setNewFirstName] = useState(patient.firstName);
   const trimmedFirstName = newFirstName.trim();
   const isSaveDisabled = !trimmedFirstName || trimmedFirstName === patient.firstName;
 
   function handleEditClick() {
-    if (!trimmedFirstName) {
+    if (isSaveDisabled) {
       return;
     }
     onEdit(trimmedFirstName);
+    setNewFirstName(trimmedFirstName);
   }
 
   return (
@@ -59,7 +51,7 @@ function PatientCard({ patient, onEdit, onArchive, showDetails }: PatientCardPro
         Save first name
       </Button>
 
-      <Button onClick={onArchive}>Archive</Button>
+      <Button onClick={onArchive}>{patient.active ? "Archive" : "Restore"}</Button>
     </div>
   );
 }
