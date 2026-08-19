@@ -1,0 +1,32 @@
+.patient-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px;
+    text-align: left;
+    background-color: rgb(13, 150, 155);
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.patient-card h3,
+.patient-card p {
+    margin: 5px 0;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 5px 0;
+}
+
+.label input {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
