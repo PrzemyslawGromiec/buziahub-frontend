@@ -1,15 +1,11 @@
 import { useState } from "react";
-
 import PatientProfile from "./components/PatientProfile/PatientProfile";
 import PatientSelector from "./components/PatientSelector/PatientSelector";
-
 import type { Patient } from "./types/Patient";
-
 import { generatePatients } from "./utils/generatePatients";
-
 import "./App.css";
 
-function App() {
+export default function App() {
   const [patients, setPatients] = useState<Patient[]>(
     () => generatePatients(6),
   );
@@ -92,5 +88,3 @@ function App() {
     </main>
   );
 }
-
-export default App;

@@ -1,4 +1,3 @@
-import React from "react";
 import type { Patient } from "../../types/Patient";
 import "./PatientSelector.css";
 

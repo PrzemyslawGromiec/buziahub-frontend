@@ -10,17 +10,14 @@
   font-weight: 600;
 
   cursor: pointer;
+
   transition:
     background-color 0.2s ease,
-    transform 0.1s ease;
+    filter 0.2s ease;
 }
 
 .button:hover:not(:disabled) {
-  background-color: #1d4ed8;
-}
-
-.button:active:not(:disabled) {
-  transform: scale(0.98);
+  filter: brightness(0.85);
 }
 
 .button:focus-visible {
@@ -31,4 +28,10 @@
 .button:disabled {
   background-color: #94a3b8;
   cursor: not-allowed;
+}
+
+.button.button-active {
+  background-color: #ffffff;
+  color: #2563eb;
+  border: 1px solid #2563eb;
 }

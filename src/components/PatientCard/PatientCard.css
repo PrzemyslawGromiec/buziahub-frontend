@@ -1,13 +1,18 @@
 .patient-card {
-    width: min(100%, 1000px);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 16px;
-    text-align: left;
-    background-color: #87a6e9;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: left;
+  background-color: #87a6e9;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.patient-card,
+.update-details {
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .patient-card h3,

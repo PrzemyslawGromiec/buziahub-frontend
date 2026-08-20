@@ -6,6 +6,7 @@ type ButtonProps = {
     onClick?: () => void;
     disabled?: boolean;
     type?: "button" | "submit" | "reset";
+    isActive?: boolean;
 };
 
 export default function Button({
@@ -13,10 +14,11 @@ export default function Button({
     onClick,
     disabled = false,
     type = "button",
+    isActive = false,
 }: ButtonProps) {
     return (
         <button
-            className="button"
+            className={`button${isActive ? " button-active" : ""}`}
             type={type}
             onClick={onClick}
             disabled={disabled}
