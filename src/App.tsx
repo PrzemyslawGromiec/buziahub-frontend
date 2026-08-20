@@ -7,7 +7,7 @@ import "./App.css";
 
 export default function App() {
   const [patients, setPatients] = useState<Patient[]>(
-    () => generatePatients(6),
+    () => generatePatients(20),
   );
 
   const [selectedPatientId, setSelectedPatientId] =

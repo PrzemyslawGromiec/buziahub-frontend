@@ -15,6 +15,21 @@
   justify-content: space-between;
 }
 
+.patient-action-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--color-background-secondary);
+}
+
+.patient-action-panel-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
 @keyframes patient-profile-enter {
   from {
     opacity: 0;

@@ -105,7 +105,7 @@ export default function PatientProfile({
               onChange={(event) => setNewFirstName(event.target.value)}
             />
 
-            <div className="patient-action-panel__buttons">
+            <div className="patient-action-panel-buttons">
               <Button
                 onClick={handleSubmitFirstName}
                 disabled={
@@ -143,7 +143,7 @@ export default function PatientProfile({
               {patient.lastName}?
             </p>
 
-            <div className="patient-action-panel__buttons">
+            <div className="patient-action-panel-buttons">
               <Button onClick={handleArchive}>
                 Confirm {patient.isActive ? "archive" : "restore"}
               </Button>

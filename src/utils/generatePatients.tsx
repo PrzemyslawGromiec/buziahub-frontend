@@ -29,7 +29,7 @@ export function generatePatients(count: number): Patient[] {
             lastName: lastNames[lastNameIndex],
             age: Math.floor(Math.random() * 60) + 18,
             gender: Math.random() > 0.5 ? "MALE" : "FEMALE",
-            active: Math.random() > 0.5,
+            isActive: Math.random() > 0.5,
             details: "Patient details nr " + (i + 1),
         };
         patients.push(patient);

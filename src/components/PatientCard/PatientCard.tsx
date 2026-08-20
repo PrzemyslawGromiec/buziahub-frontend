@@ -14,7 +14,9 @@ export default function PatientCard({ patient }: PatientCardProps) {
         Name: {patient.firstName} {patient.lastName}
       </p>
 
-      <p>Age: {patient.age}</p>
+      <small>
+        ID: {patient.id} · Age: {patient.age}
+      </small>
       <p>Status: {patient.isActive ? "Active" : "Archived"}</p>
     </div>
   );
