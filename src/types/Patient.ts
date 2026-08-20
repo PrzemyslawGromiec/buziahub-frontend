@@ -6,6 +6,6 @@ export type Patient = {
   lastName: string;
   age: number;
   gender: Gender;
-  active: boolean;
+  isActive: boolean;
   details?: string;
 };

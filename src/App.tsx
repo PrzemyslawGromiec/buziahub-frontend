@@ -1,15 +1,10 @@
 import { useState } from "react";
 
-import AppointmentCard from "./components/AppointmentCard/AppointmentCard";
-import Button from "./components/Button/Button";
-import IOSSwitch from "./components/IOSSwitch/IOSSwitch";
-import PatientCard from "./components/PatientCard/PatientCard";
-import PatientDetailsForm from "./components/PatientDetailsForm/PatientDetailsForm";
+import PatientProfile from "./components/PatientProfile/PatientProfile";
+import PatientSelector from "./components/PatientSelector/PatientSelector";
 
-import type { Appointment } from "./types/Appointment";
 import type { Patient } from "./types/Patient";
 
-import { generateAppointments } from "./utils/generateAppointments";
 import { generatePatients } from "./utils/generatePatients";
 
 import "./App.css";
@@ -19,151 +14,79 @@ function App() {
     () => generatePatients(6),
   );
 
-  const [appointments, setAppointments] = useState<Appointment[]>(
-    () => generateAppointments(15, patients),
-  );
-
-  const [selectedPatientId, setSelectedPatientId] = useState(
-    () => patients[0]?.id ?? 0,
-  );
-
-  const [showDetails, setShowDetails] = useState(true);
-  const [newDetails, setNewDetails] = useState("");
+  const [selectedPatientId, setSelectedPatientId] =
+    useState<number | null>(null);
 
   const selectedPatient =
-    patients.find((patient) => patient.id === selectedPatientId) ??
-    null;
+    patients.find(
+      (patient) => patient.id === selectedPatientId,
+    ) ?? null;
 
-  const selectedPatientAppointments = appointments.filter(
-    (appointment) =>
-      appointment.patientId === selectedPatientId,
-  );
+  function handleSelectPatient(patientId: number) {
+    setSelectedPatientId(patientId);
+  }
 
-  function updateAppointmentStatus(
-    id: number,
-    status: Appointment["status"],
+  function updateSelectedPatient(
+    update: (patient: Patient) => Patient,
   ) {
-    setAppointments((previousAppointments) =>
-      previousAppointments.map((appointment) =>
-        appointment.id === id
-          ? { ...appointment, status }
-          : appointment,
-      ),
-    );
-  }
+    if (selectedPatientId === null) {
+      return;
+    }
 
-  function handleCompleteAppointment(id: number) {
-    updateAppointmentStatus(id, "COMPLETED");
-  }
-
-  function handleCancelAppointment(id: number) {
-    updateAppointmentStatus(id, "CANCELLED");
-  }
-
-  function handleUpdateDetails() {
     setPatients((previousPatients) =>
       previousPatients.map((patient) =>
         patient.id === selectedPatientId
-          ? {
-              ...patient,
-              details: newDetails.trim(),
-            }
+          ? update(patient)
           : patient,
       ),
     );
+  }
 
-    setNewDetails("");
+  function handleUpdateDetails(newDetails: string) {
+    updateSelectedPatient((patient) => ({
+      ...patient,
+      details: newDetails.trim(),
+    }));
   }
 
   function handleActivePatient() {
-    setPatients((previousPatients) =>
-      previousPatients.map((patient) =>
-        patient.id === selectedPatientId
-          ? {
-              ...patient,
-              active: !patient.active,
-            }
-          : patient,
-      ),
-    );
+    updateSelectedPatient((patient) => ({
+      ...patient,
+      isActive: !patient.isActive,
+    }));
   }
 
   function editPatientFirstName(newFirstName: string) {
-    setPatients((previousPatients) =>
-      previousPatients.map((patient) =>
-        patient.id === selectedPatientId
-          ? {
-              ...patient,
-              firstName: newFirstName,
-            }
-          : patient,
-      ),
-    );
-  }
-
-  function handleChangePatient() {
-    const currentPatientIndex = patients.findIndex(
-      (patient) => patient.id === selectedPatientId,
-    );
-
-    const nextPatientIndex =
-      (currentPatientIndex + 1) % patients.length;
-
-    setSelectedPatientId(patients[nextPatientIndex].id);
-    setNewDetails("");
+    updateSelectedPatient((patient) => ({
+      ...patient,
+      firstName: newFirstName.trim(),
+    }));
   }
 
   return (
-    <main>
+    <main className="app">
       <h1>BuziaHub</h1>
 
-      <section>
-        <IOSSwitch
-          checked={showDetails}
-          onChange={setShowDetails}
-          label="Show patient details"
+      <section className="app-content">
+        <PatientSelector
+          patients={patients}
+          selectedPatientId={selectedPatientId}
+          onSelectPatient={handleSelectPatient}
         />
 
-        <h2>Patient profile</h2>
-
         {selectedPatient ? (
-          <>
-            <PatientCard
-              patient={selectedPatient}
-              showDetails={showDetails}
-              onEdit={editPatientFirstName}
-              onArchive={handleActivePatient}
-            />
-
-            <PatientDetailsForm
-              details={newDetails}
-              onDetailsChange={setNewDetails}
-              onSubmit={handleUpdateDetails}
-            />
-
-            <Button onClick={handleChangePatient}>
-              Next patient
-            </Button>
-
-            <h2>Appointments</h2>
-
-            {selectedPatientAppointments.length > 0 ? (
-              selectedPatientAppointments.map((appointment) => (
-                <AppointmentCard
-                  key={appointment.id}
-                  appointment={appointment}
-                  patientName={selectedPatient.firstName + " " + selectedPatient.lastName}
-                  onComplete={handleCompleteAppointment}
-                  onCancel={handleCancelAppointment}
-                  showActions
-                />
-              ))
-            ) : (
-              <p>This patient has no appointments.</p>
-            )}
-          </>
+          <PatientProfile
+            key={selectedPatient.id}
+            patient={selectedPatient}
+            onUpdateDetails={handleUpdateDetails}
+            onEditFirstName={editPatientFirstName}
+            onArchive={handleActivePatient}
+          />
         ) : (
-          <p>No patient selected.</p>
+          <p>
+            Select a patient to view their profile and
+            appointments.
+          </p>
         )}
       </section>
     </main>

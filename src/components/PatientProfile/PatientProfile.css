@@ -1,0 +1,21 @@
+.patient-profile {
+  animation: patient-profile-enter 400ms ease-out;
+}
+
+@keyframes patient-profile-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .patient-profile {
+    animation: none;
+  }
+}

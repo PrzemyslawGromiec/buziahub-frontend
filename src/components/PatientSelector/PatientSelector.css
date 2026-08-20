@@ -1,0 +1,18 @@
+.patient-button {
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8fafc;
+  cursor: pointer;
+}
+
+.patient-button:hover {
+  border-color: #87a6e9;
+  background-color: #e2e8f0;
+}
+
+.patient-button-selected {
+  color: white;
+  background-color: #87a6e9;
+  border-color: #2563eb;
+}
